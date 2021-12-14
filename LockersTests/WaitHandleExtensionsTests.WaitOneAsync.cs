@@ -16,9 +16,7 @@ public class WaitHandleExtensionsTests_WaitOneAsync
   public void CancellationRequested__TaskIsCancelled ()
   {
 
-    using AutoResetEvent autoresetEvent = new (true);
-    // Block wait handle first.
-    _ = autoresetEvent.WaitOne ();
+    using EventWaitHandle autoresetEvent = new (false, EventResetMode.AutoReset);    
 
     using CancellationTokenSource cts = new ();
     // Set up cancellable call.
@@ -33,10 +31,7 @@ public class WaitHandleExtensionsTests_WaitOneAsync
   [TestMethod]
   public async Task WaitHandleBlocks__CannotTakeWaithHandle ()
   {
-    using AutoResetEvent autoresetEvent = new (true);
-
-    // Block wait handle first.
-    _ = autoresetEvent.WaitOne ();
+    using EventWaitHandle autoresetEvent = new (false, EventResetMode.AutoReset);
 
     Assert.IsFalse
     (
@@ -48,7 +43,7 @@ public class WaitHandleExtensionsTests_WaitOneAsync
   public async Task TakeWaithHandle_WaitHandleTaken ()
   {
 
-    using AutoResetEvent autoresetEvent = new (true);
+    using EventWaitHandle autoresetEvent = new (true, EventResetMode.AutoReset);
 
     Assert.IsTrue
     (
@@ -62,10 +57,7 @@ public class WaitHandleExtensionsTests_WaitOneAsync
   public async Task WaitWithTimeout_TimeoutExpires ()
   {
 
-    using AutoResetEvent autoresetEvent = new (true);
-
-    // Block wait handle first.
-    _ = autoresetEvent.WaitOne ();
+    using EventWaitHandle autoresetEvent = new (false, EventResetMode.AutoReset);
 
     const uint timeoutSeconds = 3;
     var sw = Stopwatch.StartNew();
