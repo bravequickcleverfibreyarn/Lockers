@@ -1,23 +1,25 @@
-﻿using Lockers.Internal;
-
+﻿
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Lockers
+namespace Lockers.Extensions
 {
   static public class WaitHandleExtensions
   {
+    /// <remarks>
+    /// Use <see cref="Timeout.InfiniteTimeSpan"/> for no timeout and <see cref="TimeSpan.Zero"/> for immediate timeout.
+    /// </remarks>
     static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler)
     {
       Validate (wh, scheduler);
-      return WaitOneAsync (wh, ct, (uint) maxWaitTime.TotalMilliseconds, scheduler);
+      return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, (uint) maxWaitTime.TotalMilliseconds, scheduler);
     }
 
     static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, uint maxWaitTime, TaskScheduler scheduler)
     {
       Validate (wh, scheduler);
-      return WaitHandleExtensions_UncheckedInputs.WaitOneAsync (wh, ct, maxWaitTime, scheduler);
+      return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, maxWaitTime, scheduler);
     }
 
     private static void Validate (WaitHandle wh, TaskScheduler scheduler)
@@ -31,16 +33,16 @@ namespace Lockers
   }
 }
 
-namespace Lockers.Internal
+namespace Lockers.Internal.Extensions
 {
-  static internal class WaitHandleExtensions_UncheckedInputs
+  static internal class WaitHandleExtensions
   {
-    static public Task<bool> WaitOneAsync (WaitHandle wh, CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler)
+    static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler)
     {
       return WaitOneAsync (wh, ct, (uint) maxWaitTime.TotalMilliseconds, scheduler);
     }
 
-    static public Task<bool> WaitOneAsync (WaitHandle wh, CancellationToken ct, uint maxWaitTime, TaskScheduler scheduler)
+    static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, uint maxWaitTime, TaskScheduler scheduler)
     {
       TaskCompletionSource<bool> tcs      = new ();
       CancellationTokenRegistration ctr   = default;

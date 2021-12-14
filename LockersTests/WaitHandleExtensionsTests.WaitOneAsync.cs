@@ -1,4 +1,4 @@
-using Lockers;
+using Lockers.Extensions;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
