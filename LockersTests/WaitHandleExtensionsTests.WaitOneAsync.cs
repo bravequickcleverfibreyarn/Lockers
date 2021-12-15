@@ -16,11 +16,11 @@ public class WaitHandleExtensionsTests_WaitOneAsync
   public void CancellationRequested__TaskIsCancelled ()
   {
 
-    using EventWaitHandle autoresetEvent = new (false, EventResetMode.AutoReset);    
+    using EventWaitHandle ewh = new (false, EventResetMode.AutoReset);
 
     using CancellationTokenSource cts = new ();
     // Set up cancellable call.
-    Task<bool> test = autoresetEvent.WaitOneAsync (cts.Token, Timeout.InfiniteTimeSpan, TaskScheduler.Current);
+    Task<bool> test = ewh.WaitOneAsync (cts.Token, Timeout.InfiniteTimeSpan, TaskScheduler.Current);
 
     cts.Cancel ();
 
@@ -31,11 +31,11 @@ public class WaitHandleExtensionsTests_WaitOneAsync
   [TestMethod]
   public async Task WaitHandleBlocks__CannotTakeWaithHandle ()
   {
-    using EventWaitHandle autoresetEvent = new (false, EventResetMode.AutoReset);
+    using EventWaitHandle ewh = new (false, EventResetMode.AutoReset);
 
     Assert.IsFalse
     (
-      await autoresetEvent.WaitOneAsync (CancellationToken.None, TimeSpan.Zero, TaskScheduler.Current)
+      await ewh.WaitOneAsync (CancellationToken.None, TimeSpan.Zero, TaskScheduler.Current)
     );
   }
 
@@ -43,26 +43,26 @@ public class WaitHandleExtensionsTests_WaitOneAsync
   public async Task TakeWaithHandle_WaitHandleTaken ()
   {
 
-    using EventWaitHandle autoresetEvent = new (true, EventResetMode.AutoReset);
+    using EventWaitHandle ewh = new (true, EventResetMode.AutoReset);
 
     Assert.IsTrue
     (
-      await autoresetEvent.WaitOneAsync (CancellationToken.None, Timeout.InfiniteTimeSpan, TaskScheduler.Current)
+      await ewh.WaitOneAsync (CancellationToken.None, Timeout.InfiniteTimeSpan, TaskScheduler.Current)
     );
 
-    Assert.IsFalse (autoresetEvent.WaitOne (0));
+    Assert.IsFalse (ewh.WaitOne (0));
   }
 
   [TestMethod]
   public async Task WaitWithTimeout_TimeoutExpires ()
   {
 
-    using EventWaitHandle autoresetEvent = new (false, EventResetMode.AutoReset);
+    using EventWaitHandle ewh = new (false, EventResetMode.AutoReset);
 
     const uint timeoutSeconds = 3;
     var sw = Stopwatch.StartNew();
 
-    bool taken = await autoresetEvent.WaitOneAsync 
+    bool taken = await ewh.WaitOneAsync
     (
       CancellationToken.None,
       TimeSpan.FromSeconds(timeoutSeconds),
@@ -74,5 +74,38 @@ public class WaitHandleExtensionsTests_WaitOneAsync
     Assert.IsTrue (timeoutSeconds < sw.Elapsed.TotalSeconds);
     Assert.IsTrue (sw.Elapsed.TotalSeconds - timeoutSeconds < 1);
     Assert.IsFalse (taken);
+  }
+
+  [TestMethod]
+  public void PassNullTaskScheduler__ThrowsArgumentNullException ()
+  {
+    using EventWaitHandle ewh = new (default, default);
+
+    _ = Assert.ThrowsException<ArgumentNullException>
+    (
+      () => ewh.WaitOneAsync (default, default (TimeSpan), scheduler: null!).Wait ()
+    );
+
+    _ = Assert.ThrowsException<ArgumentNullException>
+    (
+      () => ewh.WaitOneAsync (default, default (uint), scheduler: null!).Wait ()
+    );
+  }
+
+  [TestMethod]
+  public void PassNullEventWaitHandle__ThrowsArgumentNullException ()
+  {
+    using EventWaitHandle? ewh  = null;
+    TaskScheduler scheduler     = TaskScheduler.Default;
+
+    _ = Assert.ThrowsException<ArgumentNullException>
+    (
+      () => ewh!.WaitOneAsync (default, default (TimeSpan), scheduler).Wait ()
+    );
+
+    _ = Assert.ThrowsException<ArgumentNullException>
+    (
+      () => ewh!.WaitOneAsync (default, default (uint), scheduler).Wait ()
+    );
   }
 }
