@@ -43,12 +43,15 @@ sealed public class AsyncLock : IDisposable
     return false;
   }
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public bool Unlock ()
   {
     Thread.MemoryBarrier ();
     return autoResetEvent.Set ();
   }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public void Dispose ()
   {
     if (disposed)
@@ -58,4 +61,5 @@ sealed public class AsyncLock : IDisposable
 
     disposed = true;
   }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

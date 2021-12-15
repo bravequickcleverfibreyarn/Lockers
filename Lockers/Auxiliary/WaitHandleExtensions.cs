@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace Software9119.Lockers.Extensions
 {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   static public class WaitHandleExtensions
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
   {
     /// <remarks>
     /// Use <see cref="Timeout.InfiniteTimeSpan"/> for no timeout and <see cref="TimeSpan.Zero"/> for immediate timeout.
@@ -16,11 +18,13 @@ namespace Software9119.Lockers.Extensions
       return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, (int) maxWaitTime.TotalMilliseconds, scheduler);
     }
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, int maxWaitTime, TaskScheduler scheduler)
     {
       Validate (wh, scheduler);
       return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, maxWaitTime, scheduler);
     }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     static private void Validate (WaitHandle wh, TaskScheduler scheduler)
     {
