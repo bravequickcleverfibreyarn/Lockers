@@ -22,7 +22,7 @@ namespace Lockers.Extensions
       return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, maxWaitTime, scheduler);
     }
 
-    private static void Validate (WaitHandle wh, TaskScheduler scheduler)
+    static private void Validate (WaitHandle wh, TaskScheduler scheduler)
     {
       if (wh is null)
         throw new ArgumentNullException (nameof (wh));

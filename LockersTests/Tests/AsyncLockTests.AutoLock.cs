@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace LockersTests.Tests;
 
 [TestClass]
-public class AsyncLockTests_AutoLock
+sealed public class AsyncLockTests_AutoLock
 {
   [TestMethod]
-  public async Task CancellationRequested__TaskIsCancelled ()
+  async public Task CancellationRequested__TaskIsCancelled ()
   {
 
     using AsyncLock asyncLock           = new ();
@@ -32,7 +32,7 @@ public class AsyncLockTests_AutoLock
   }
 
   [TestMethod]
-  public async Task Locked__CannotTakeLock ()
+  async public Task Locked__CannotTakeLock ()
   {
     using AsyncLock asyncLock   = new ();
     TaskScheduler scheduler     = TaskScheduler.Current;
@@ -45,7 +45,7 @@ public class AsyncLockTests_AutoLock
   }
 
   [TestMethod]
-  public async Task TryLock__LockTaken ()
+  async public Task TryLock__LockTaken ()
   {
 
     using AsyncLock asyncLock   = new ();
@@ -55,7 +55,7 @@ public class AsyncLockTests_AutoLock
   }
 
   [TestMethod]
-  public async Task TryUnlock__Unlocked ()
+  async public Task TryUnlock__Unlocked ()
   {
 
     using AsyncLock asyncLock   = new ();
@@ -72,7 +72,7 @@ public class AsyncLockTests_AutoLock
   }
 
   [TestMethod]
-  public async Task WaitWithTimeout__TimeoutExpires ()
+  async public Task WaitWithTimeout__TimeoutExpires ()
   {
 
     using AsyncLock asyncLock   = new ();

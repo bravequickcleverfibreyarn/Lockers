@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace LockersTests.Tests;
 
 [TestClass]
-public class WaitHandleExtensionsTests_WaitOneAsync
+sealed public class WaitHandleExtensionsTests_WaitOneAsync
 {
   [TestMethod]
   public void CancellationRequested__TaskIsCancelled ()
@@ -29,7 +29,7 @@ public class WaitHandleExtensionsTests_WaitOneAsync
   }
 
   [TestMethod]
-  public async Task WaitHandleBlocks__CannotTakeWaithHandle ()
+  async public Task WaitHandleBlocks__CannotTakeWaithHandle ()
   {
     using EventWaitHandle ewh = new (false, EventResetMode.AutoReset);
 
@@ -40,7 +40,7 @@ public class WaitHandleExtensionsTests_WaitOneAsync
   }
 
   [TestMethod]
-  public async Task TakeWaithHandle_WaitHandleTaken ()
+  async public Task TakeWaithHandle_WaitHandleTaken ()
   {
 
     using EventWaitHandle ewh = new (true, EventResetMode.AutoReset);
@@ -54,7 +54,7 @@ public class WaitHandleExtensionsTests_WaitOneAsync
   }
 
   [TestMethod]
-  public async Task WaitWithTimeout_TimeoutExpires ()
+  async public Task WaitWithTimeout_TimeoutExpires ()
   {
 
     using EventWaitHandle ewh = new (false, EventResetMode.AutoReset);

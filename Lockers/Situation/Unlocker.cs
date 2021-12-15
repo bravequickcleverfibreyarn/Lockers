@@ -6,7 +6,7 @@ namespace Lockers;
 
 public struct Unlocker : IDisposable
 {
-  private readonly EventWaitHandle? eventWaitHandle;
+  readonly private EventWaitHandle? eventWaitHandle;
 
   private bool disposed;
 

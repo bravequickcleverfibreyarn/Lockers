@@ -10,15 +10,15 @@ namespace Lockers;
 /// Provides non-blocking synchronization lock.
 /// </summary>
 /// <remarks>Calls <see cref="Thread.MemoryBarrier"/> upon lock take and before lock release.</remarks>
-public sealed class AsyncLock : IDisposable
+sealed public class AsyncLock : IDisposable
 {
-  private readonly AutoResetEvent autoResetEvent = new(true);
+  readonly private AutoResetEvent autoResetEvent = new(true);
   private bool disposed;
 
   /// <remarks>
   /// Use <see cref="Timeout.InfiniteTimeSpan"/> for no timeout and <see cref="TimeSpan.Zero"/> for immediate timeout.
   /// </remarks>
-  public async Task<Unlocker> AutoLock ( CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
+  async public Task<Unlocker> AutoLock ( CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
   {
     if (await Lock (ct, maxWaitTime, scheduler))
       return new Unlocker (autoResetEvent);
@@ -29,7 +29,7 @@ public sealed class AsyncLock : IDisposable
   /// <remarks>
   /// Use <see cref="Timeout.InfiniteTimeSpan"/> for no timeout and <see cref="TimeSpan.Zero"/> for immediate timeout.
   /// </remarks>
-  public async Task<bool> Lock ( CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
+  async public Task<bool> Lock ( CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
   {
     if (scheduler is null)
       throw new ArgumentNullException (nameof (scheduler));

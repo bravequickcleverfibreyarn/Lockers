@@ -7,7 +7,7 @@ using System.Threading;
 namespace LockersTests.Tests;
 
 [TestClass]
-public class UnlockerTests
+sealed public class UnlockerTests
 {
   [TestMethod]
   public void Dispose__SetsEventWaitHandle ()
