@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace LockersTests;
+namespace LockersTests.Tests;
 
 [TestClass]
 public class WaitHandleExtensionsTests_WaitOneAsync

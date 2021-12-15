@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using System.Threading;
 
-namespace LockersTests;
+namespace LockersTests.Tests;
 
 [TestClass]
 public class UnlockerTests
