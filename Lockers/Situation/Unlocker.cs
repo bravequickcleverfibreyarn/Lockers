@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 
-namespace Lockers;
+namespace Software9119.Lockers;
 
 public struct Unlocker : IDisposable
 {

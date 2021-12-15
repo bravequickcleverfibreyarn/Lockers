@@ -1,10 +1,10 @@
-﻿using Lockers.Internal.Extensions;
+﻿using Software9119.Lockers.Internal.Extensions;
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Lockers;
+namespace Software9119.Lockers;
 
 /// <summary>
 /// Provides non-blocking synchronization lock.

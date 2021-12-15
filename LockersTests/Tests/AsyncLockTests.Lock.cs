@@ -1,6 +1,6 @@
-﻿using Lockers;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Software9119.Lockers;
 
 using System;
 using System.Diagnostics;

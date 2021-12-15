@@ -5,6 +5,13 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>Software9119.$(AssemblyName)</PackageId>
+    <Authors>Jiri Cepelka</Authors>
+    <Company>Software9119</Company>
+    <Description>Models for non-blocking synchronization.</Description>
+    <Copyright>Verbal consent needed.</Copyright>
+    <RootNamespace>Software9119.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
 
 </Project>

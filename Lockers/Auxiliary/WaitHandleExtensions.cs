@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Lockers.Extensions
+namespace Software9119.Lockers.Extensions
 {
   static public class WaitHandleExtensions
   {
@@ -33,7 +33,7 @@ namespace Lockers.Extensions
   }
 }
 
-namespace Lockers.Internal.Extensions
+namespace Software9119.Lockers.Internal.Extensions
 {
   static internal class WaitHandleExtensions
   {
