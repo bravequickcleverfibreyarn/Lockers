@@ -1,6 +1,6 @@
 [*.cs]
 
-csharp_preferred_modifier_order=static, extern, async, unsafe, volatile, sealed, override, readonly, new, virtual, abstract, public, private, protected, internal:silent
+csharp_preferred_modifier_order=static, extern, async, unsafe, volatile, sealed, override, readonly, new, virtual, abstract, public, private, protected, internal:suggestion
 
 # CA1001: Types that own disposable fields should be disposable
 dotnet_diagnostic.CA1001.severity = suggestion
