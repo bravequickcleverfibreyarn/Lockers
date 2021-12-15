@@ -13,10 +13,10 @@ namespace Lockers.Extensions
     static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler)
     {
       Validate (wh, scheduler);
-      return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, (uint) maxWaitTime.TotalMilliseconds, scheduler);
+      return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, (int) maxWaitTime.TotalMilliseconds, scheduler);
     }
 
-    static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, uint maxWaitTime, TaskScheduler scheduler)
+    static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, int maxWaitTime, TaskScheduler scheduler)
     {
       Validate (wh, scheduler);
       return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, maxWaitTime, scheduler);
@@ -39,10 +39,10 @@ namespace Lockers.Internal.Extensions
   {
     static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler)
     {
-      return WaitOneAsync (wh, ct, (uint) maxWaitTime.TotalMilliseconds, scheduler);
+      return WaitOneAsync (wh, ct, (int) maxWaitTime.TotalMilliseconds, scheduler);
     }
 
-    static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, uint maxWaitTime, TaskScheduler scheduler)
+    static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, int maxWaitTime, TaskScheduler scheduler)
     {
       TaskCompletionSource<bool> tcs      = new ();
       CancellationTokenRegistration ctr   = default;

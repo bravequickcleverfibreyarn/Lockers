@@ -88,7 +88,7 @@ public class WaitHandleExtensionsTests_WaitOneAsync
 
     _ = Assert.ThrowsException<ArgumentNullException>
     (
-      () => ewh.WaitOneAsync (default, default (uint), scheduler: null!).Wait ()
+      () => ewh.WaitOneAsync (default, default (int), scheduler: null!).Wait ()
     );
   }
 
@@ -105,7 +105,7 @@ public class WaitHandleExtensionsTests_WaitOneAsync
 
     _ = Assert.ThrowsException<ArgumentNullException>
     (
-      () => ewh!.WaitOneAsync (default, default (uint), scheduler).Wait ()
+      () => ewh!.WaitOneAsync (default, default (int), scheduler).Wait ()
     );
   }
 }
