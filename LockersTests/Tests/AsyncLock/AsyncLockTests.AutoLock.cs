@@ -80,7 +80,7 @@ sealed public class AsyncLockTests_AutoLock
     TaskScheduler scheduler     = TaskScheduler.Current;
     _ = await asyncLock.AutoLock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
 
-    const uint timeoutSeconds = 3;
+    const uint timeoutSeconds = 1;
     var sw = Stopwatch.StartNew();
 
     Unlocker unlocker = await asyncLock.AutoLock

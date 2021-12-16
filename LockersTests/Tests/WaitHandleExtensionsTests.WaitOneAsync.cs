@@ -59,7 +59,7 @@ sealed public class WaitHandleExtensionsTests_WaitOneAsync
 
     using EventWaitHandle ewh = new (false, EventResetMode.AutoReset);
 
-    const uint timeoutSeconds = 3;
+    const uint timeoutSeconds = 1;
     var sw = Stopwatch.StartNew();
 
     bool taken = await ewh.WaitOneAsync

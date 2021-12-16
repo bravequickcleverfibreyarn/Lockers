@@ -66,7 +66,7 @@ sealed public class AsyncLockTests_Lock
     TaskScheduler scheduler     = TaskScheduler.Current;
     _ = await asyncLock.Lock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
 
-    const uint timeoutSeconds = 3;
+    const uint timeoutSeconds = 1;
     var sw = Stopwatch.StartNew();
 
     bool taken = await asyncLock.Lock

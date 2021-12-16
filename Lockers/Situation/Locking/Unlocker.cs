@@ -8,14 +8,14 @@ namespace Software9119.Lockers;
 public struct Unlocker : IDisposable
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 {
-  readonly private EventWaitHandle? eventWaitHandle;
+  readonly private EventWaitHandle? ewh;
 
   private bool disposed;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-  public Unlocker ( EventWaitHandle eventWaitHandle )
+  public Unlocker ( EventWaitHandle ewh )
   {
-    this.eventWaitHandle = eventWaitHandle;
+    this.ewh = ewh;
 
     disposed = false;
   }
@@ -28,8 +28,8 @@ public struct Unlocker : IDisposable
   /// <remarks>
   /// If lock is taken, returns <see langword="true"/>.
   /// </remarks>
-  [MemberNotNullWhen (true, nameof (eventWaitHandle))]
-  public bool CanUnlock => eventWaitHandle is not null;
+  [MemberNotNullWhen (true, nameof (ewh))]
+  public bool CanUnlock => ewh is not null;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public void Dispose ()
@@ -51,7 +51,7 @@ public struct Unlocker : IDisposable
     if (CanUnlock)
     {
       Thread.MemoryBarrier ();
-      return eventWaitHandle.Set ();
+      return ewh.Set ();
     }
 
     return false;

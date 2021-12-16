@@ -32,7 +32,7 @@ sealed public class UnlockerTests
   }
 
   [TestMethod]
-  public void Unlock__CannotUnlockWithDefault ()
+  public void TryUnlockWithDefault__CannotUnlock ()
   {
     Unlocker unlocker = default;
     Assert.IsFalse (unlocker.CanUnlock);
@@ -40,7 +40,7 @@ sealed public class UnlockerTests
   }
 
   [TestMethod]
-  public void Unlock__CannotUnlockWithNew ()
+  public void TryUnlockWithNew__CannotUnlock ()
   {
     Unlocker unlocker = new();
     Assert.IsFalse (unlocker.CanUnlock);

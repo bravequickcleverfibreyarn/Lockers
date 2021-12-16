@@ -12,7 +12,7 @@ namespace Software9119.Lockers;
 /// <remarks>Calls <see cref="Thread.MemoryBarrier"/> upon lock take and before lock release.</remarks>
 sealed public class AsyncLock : IDisposable
 {
-  readonly private AutoResetEvent autoResetEvent = new(true);
+  readonly private AutoResetEvent are = new(true);
   private bool disposed;
 
   /// <remarks>
@@ -21,7 +21,7 @@ sealed public class AsyncLock : IDisposable
   async public Task<Unlocker> AutoLock ( CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
   {
     if (await Lock (ct, maxWaitTime, scheduler))
-      return new Unlocker (autoResetEvent);
+      return new Unlocker (are);
 
     return default;
   }
@@ -34,7 +34,7 @@ sealed public class AsyncLock : IDisposable
     if (scheduler is null)
       throw new ArgumentNullException (nameof (scheduler));
 
-    if (await autoResetEvent.WaitOneAsync (ct, maxWaitTime, scheduler))
+    if (await are.WaitOneAsync (ct, maxWaitTime, scheduler))
     {
       Thread.MemoryBarrier ();
       return true;
@@ -47,7 +47,7 @@ sealed public class AsyncLock : IDisposable
   public bool Unlock ()
   {
     Thread.MemoryBarrier ();
-    return autoResetEvent.Set ();
+    return are.Set ();
   }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
@@ -57,7 +57,7 @@ sealed public class AsyncLock : IDisposable
     if (disposed)
       return;
 
-    autoResetEvent.Dispose ();
+    are.Dispose ();
 
     disposed = true;
   }
