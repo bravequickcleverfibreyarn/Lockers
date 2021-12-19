@@ -1,0 +1,2 @@
+﻿Possible advancements:
+• extend AsyncBlocker and/or AsyncLocker API with other common types for timeout (long, int, uint, …)
