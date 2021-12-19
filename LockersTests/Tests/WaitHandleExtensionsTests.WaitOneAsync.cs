@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Software9119.Lockers.Extensions;
 
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +26,10 @@ sealed public class WaitHandleExtensionsTests_WaitOneAsync
     cts.Cancel ();
 
     AggregateException aggregateException = Assert.ThrowsException<AggregateException> (() => test.Wait ());
-    Assert.AreEqual (aggregateException.InnerException!.GetType (), typeof (TaskCanceledException));
+
+    ReadOnlyCollection<Exception> innerExceptions = aggregateException.InnerExceptions;
+    Assert.AreEqual (1, innerExceptions.Count);
+    Assert.AreEqual (typeof (TaskCanceledException), innerExceptions [0]!.GetType ());
   }
 
   [TestMethod]
