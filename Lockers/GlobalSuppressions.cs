@@ -18,3 +18,6 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage ("Performance", "CA1815:Override equals and operator equals on value types", Justification = "Not relevant.", Scope = "type", Target = "~T:Software9119.Lockers.Unlocker")]
 [assembly: SuppressMessage ("Performance", "CA1815:Override equals and operator equals on value types", Justification = "Not relevant.", Scope = "type", Target = "~T:Software9119.Lockers.Unblocker")]
+
+[assembly: SuppressMessage ("Design", "CA1063:Implement IDisposable Correctly", Justification = "False positive.", Scope = "member", Target = "~M:Software9119.Lockers.AsyncBlocker.Dispose")]
+[assembly: SuppressMessage ("Design", "CA1063:Implement IDisposable Correctly", Justification = "False positive.", Scope = "member", Target = "~M:Software9119.Lockers.AsyncLock.Dispose")]

@@ -10,9 +10,14 @@ namespace Software9119.Lockers;
 /// Provides non-blocking synchronization lock.
 /// </summary>
 /// <remarks>Calls <see cref="Thread.MemoryBarrier"/> upon lock take and before lock release.</remarks>
-sealed public class AsyncLock : IDisposable
+public class AsyncLock : IDisposable
 {
-  readonly private AutoResetEvent are = new(true);
+  /// <summary>
+  /// <see cref="EventWaitHandle"/> that is used for synced access.
+  /// </summary>
+#pragma warning disable CA1051 // Do not declare visible instance fields
+  readonly protected AutoResetEvent are = new(true);
+#pragma warning restore CA1051 // Do not declare visible instance fields
   private bool disposed;
 
   /// <remarks>
@@ -60,6 +65,13 @@ sealed public class AsyncLock : IDisposable
     are.Dispose ();
 
     disposed = true;
+
+    Dispose (true);
+    GC.SuppressFinalize (this);
   }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+  virtual protected void Dispose ( bool disposing ) { }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }
