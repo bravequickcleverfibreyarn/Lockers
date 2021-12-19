@@ -17,7 +17,7 @@ public class AsyncBlocker : IDisposable
 #pragma warning disable CA1051 // Do not declare visible instance fields
   readonly protected AutoResetEvent are = new(true);
 #pragma warning restore CA1051 // Do not declare visible instance fields
-  private bool disposed;
+  bool disposed;
 
   /// <remarks>
   /// Use <see cref="Timeout.InfiniteTimeSpan"/> for no timeout and <see cref="TimeSpan.Zero"/> for immediate timeout.

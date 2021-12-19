@@ -8,9 +8,9 @@ namespace Software9119.Lockers;
 public struct Unlocker : IDisposable
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 {
-  readonly private EventWaitHandle? ewh;
+  readonly EventWaitHandle? ewh;
 
-  private bool disposed;
+  bool disposed;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public Unlocker ( EventWaitHandle ewh )

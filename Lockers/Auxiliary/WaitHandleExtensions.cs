@@ -14,7 +14,7 @@ namespace Software9119.Lockers.Extensions
     /// </remarks>
     /// <exception cref="ArgumentNullException">When any reference is <see langword="null"/>.</exception>
     /// <exception cref="TaskCanceledException" />
-    static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler)
+    static public Task<bool> WaitOneAsync ( this WaitHandle wh, CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
     {
       Validate (wh, scheduler);
       return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, (int) maxWaitTime.TotalMilliseconds, scheduler);
@@ -25,13 +25,13 @@ namespace Software9119.Lockers.Extensions
     /// </remarks>
     /// <exception cref="ArgumentNullException">When any reference is <see langword="null"/>.</exception>
     /// <exception cref="TaskCanceledException" />
-    static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, int maxWaitTime, TaskScheduler scheduler)
+    static public Task<bool> WaitOneAsync ( this WaitHandle wh, CancellationToken ct, int maxWaitTime, TaskScheduler scheduler )
     {
       Validate (wh, scheduler);
       return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, maxWaitTime, scheduler);
     }
 
-    static private void Validate (WaitHandle wh, TaskScheduler scheduler)
+    static void Validate ( WaitHandle wh, TaskScheduler scheduler )
     {
       if (wh is null)
         throw new ArgumentNullException (nameof (wh));
@@ -44,14 +44,14 @@ namespace Software9119.Lockers.Extensions
 
 namespace Software9119.Lockers.Internal.Extensions
 {
-  static internal class WaitHandleExtensions
+  static class WaitHandleExtensions
   {
-    static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler)
+    static public Task<bool> WaitOneAsync ( this WaitHandle wh, CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
     {
       return WaitOneAsync (wh, ct, (int) maxWaitTime.TotalMilliseconds, scheduler);
     }
 
-    static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, int maxWaitTime, TaskScheduler scheduler)
+    static public Task<bool> WaitOneAsync ( this WaitHandle wh, CancellationToken ct, int maxWaitTime, TaskScheduler scheduler )
     {
       TaskCompletionSource<bool> tcs      = new ();
       CancellationTokenRegistration ctr   = default;

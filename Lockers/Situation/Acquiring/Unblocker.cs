@@ -9,8 +9,8 @@ public struct Unblocker : IDisposable
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 {
 
-  readonly private EventWaitHandle ewh;
-  private bool disposed;
+  readonly EventWaitHandle ewh;
+  bool disposed;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public Unblocker ( EventWaitHandle ewh )
