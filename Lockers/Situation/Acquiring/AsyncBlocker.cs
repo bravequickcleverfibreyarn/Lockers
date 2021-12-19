@@ -22,6 +22,8 @@ public class AsyncBlocker : IDisposable
   /// <remarks>
   /// Use <see cref="Timeout.InfiniteTimeSpan"/> for no timeout and <see cref="TimeSpan.Zero"/> for immediate timeout.
   /// </remarks>
+  /// <exception cref="ArgumentNullException">When <paramref name="scheduler"/> is <see langword="null"/>.</exception>
+  /// <exception cref="TaskCanceledException" />
   async public Task<Unblocker> AutoBlock ( CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
   {
     if (scheduler is null)

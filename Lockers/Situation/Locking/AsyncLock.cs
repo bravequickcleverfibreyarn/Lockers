@@ -23,6 +23,8 @@ public class AsyncLock : IDisposable
   /// <remarks>
   /// Use <see cref="Timeout.InfiniteTimeSpan"/> for no timeout and <see cref="TimeSpan.Zero"/> for immediate timeout.
   /// </remarks>
+  /// <exception cref="ArgumentNullException">When <paramref name="scheduler"/> is <see langword="null"/>.</exception>
+  /// <exception cref="TaskCanceledException" />
   async public Task<Unlocker> AutoLock ( CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
   {
     if (await Lock (ct, maxWaitTime, scheduler))
@@ -34,6 +36,8 @@ public class AsyncLock : IDisposable
   /// <remarks>
   /// Use <see cref="Timeout.InfiniteTimeSpan"/> for no timeout and <see cref="TimeSpan.Zero"/> for immediate timeout.
   /// </remarks>
+  /// <exception cref="ArgumentNullException">When <paramref name="scheduler"/> is <see langword="null"/>.</exception>
+  /// <exception cref="TaskCanceledException" />
   async public Task<bool> Lock ( CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
   {
     if (scheduler is null)

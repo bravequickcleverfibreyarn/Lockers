@@ -12,19 +12,24 @@ namespace Software9119.Lockers.Extensions
     /// <remarks>
     /// Use <see cref="Timeout.InfiniteTimeSpan"/> for no timeout and <see cref="TimeSpan.Zero"/> for immediate timeout.
     /// </remarks>
+    /// <exception cref="ArgumentNullException">When any reference is <see langword="null"/>.</exception>
+    /// <exception cref="TaskCanceledException" />
     static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler)
     {
       Validate (wh, scheduler);
       return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, (int) maxWaitTime.TotalMilliseconds, scheduler);
     }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    /// <remarks>
+    /// Use <c>0</c> for no timeout and <c>-1</c> for immediate timeout.
+    /// </remarks>
+    /// <exception cref="ArgumentNullException">When any reference is <see langword="null"/>.</exception>
+    /// <exception cref="TaskCanceledException" />
     static public Task<bool> WaitOneAsync (this WaitHandle wh, CancellationToken ct, int maxWaitTime, TaskScheduler scheduler)
     {
       Validate (wh, scheduler);
       return Internal.Extensions.WaitHandleExtensions.WaitOneAsync (wh, ct, maxWaitTime, scheduler);
     }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
     static private void Validate (WaitHandle wh, TaskScheduler scheduler)
     {
