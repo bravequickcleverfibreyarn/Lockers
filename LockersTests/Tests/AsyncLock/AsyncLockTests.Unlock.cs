@@ -16,7 +16,6 @@ sealed public class AsyncLockTests_Unlock
   {
 
     using AsyncLock asyncLock   = new ();
-
     TaskScheduler scheduler     = TaskScheduler.Current;
 
     _ = await asyncLock.Lock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);

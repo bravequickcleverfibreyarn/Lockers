@@ -11,64 +11,64 @@ using System.Threading.Tasks;
 namespace LockersTests.Tests;
 
 [TestClass]
-sealed public class AsyncLockTests_AutoLock
+sealed public class AsyncBlockerTests_AutoBlock
 {
   [TestMethod]
   async public Task CancellationRequested__TaskIsCancelled ()
   {
 
-    using AsyncLock asyncLock           = new ();
-    using CancellationTokenSource cts   = new ();
+    using AsyncBlocker blocker           = new ();
+    using CancellationTokenSource cts    = new ();
 
     TaskScheduler scheduler = TaskScheduler.Current;
-    _ = await asyncLock.AutoLock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
+    _ = await blocker.AutoBlock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
 
-    Task<Unlocker> test = asyncLock.AutoLock(cts.Token, Timeout.InfiniteTimeSpan, scheduler);
+    Task<Unblocker> test = blocker.AutoBlock(cts.Token, Timeout.InfiniteTimeSpan, scheduler);
 
     cts.Cancel ();
 
     AggregateException aggregateException = Assert.ThrowsException<AggregateException> (() => test.Wait ());
-    
+
     ReadOnlyCollection<Exception> innerExceptions = aggregateException.InnerExceptions;
     Assert.AreEqual (1, innerExceptions.Count);
     Assert.AreEqual (typeof (TaskCanceledException), innerExceptions [0]!.GetType ());
   }
 
   [TestMethod]
-  async public Task Locked__CannotTakeLock ()
+  async public Task Blocking__CannotBlock ()
   {
-    using AsyncLock asyncLock   = new ();
+    using AsyncBlocker blocker  = new ();
     TaskScheduler scheduler     = TaskScheduler.Current;
 
-    _ = await asyncLock.AutoLock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
+    _ = await blocker.AutoBlock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
 
-    Unlocker unlocker = await asyncLock.AutoLock (CancellationToken.None, TimeSpan.Zero, scheduler);
+    Unblocker unblocker = await blocker.AutoBlock (CancellationToken.None, TimeSpan.Zero, scheduler);
 
-    Assert.IsFalse (unlocker.CanUnlock);
+    Assert.IsFalse (unblocker.CanUnblock);
   }
 
   [TestMethod]
-  async public Task TryLock__LockTaken ()
+  async public Task TryBlock__Blocking ()
   {
 
-    using AsyncLock asyncLock   = new ();
-    Unlocker unlocker           = await asyncLock.AutoLock (CancellationToken.None, TimeSpan.Zero, TaskScheduler.Current);
+    using AsyncBlocker blocker  = new ();
+    Unblocker unblocker         = await blocker.AutoBlock(CancellationToken.None, TimeSpan.Zero, TaskScheduler.Current);
 
-    Assert.IsTrue (unlocker.CanUnlock);
+    Assert.IsTrue (unblocker.CanUnblock);
   }
 
   [TestMethod]
-  async public Task TryUnlock__Unlocked ()
+  async public Task TryUnblock__Unblocked ()
   {
 
-    using AsyncLock asyncLock   = new ();
-    
-    TaskScheduler scheduler     = TaskScheduler.Current;
-    Unlocker unlocker           = await asyncLock.AutoLock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
+    using AsyncBlocker blocker  = new ();
 
-    _ = unlocker.Unlock ();
+    TaskScheduler scheduler   = TaskScheduler.Current;
+    Unblocker unblocker       = await blocker.AutoBlock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
 
-    unlocker = await asyncLock.AutoLock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
+    _ = unblocker.Unblock ();
+
+    unblocker = await blocker.AutoBlock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
 
     // If blocking is not entered, code bellow will never execute.
     Assert.IsTrue (true);
@@ -78,15 +78,15 @@ sealed public class AsyncLockTests_AutoLock
   async public Task WaitWithTimeout__TimeoutExpires ()
   {
 
-    using AsyncLock asyncLock   = new ();
-
+    using AsyncBlocker blocker  = new ();
     TaskScheduler scheduler     = TaskScheduler.Current;
-    _ = await asyncLock.AutoLock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
+
+    _ = await blocker.AutoBlock (CancellationToken.None, Timeout.InfiniteTimeSpan, scheduler);
 
     const uint timeoutSeconds = 1;
     var sw = Stopwatch.StartNew();
 
-    Unlocker unlocker = await asyncLock.AutoLock
+    Unblocker unblocker = await blocker.AutoBlock
     (
       CancellationToken.None,
       TimeSpan.FromSeconds(timeoutSeconds),
@@ -99,17 +99,17 @@ sealed public class AsyncLockTests_AutoLock
 
     Assert.IsTrue (timeoutSeconds <= elapsedSeconds);
     Assert.IsTrue (1 > elapsedSeconds - timeoutSeconds);
-    Assert.IsFalse (unlocker.CanUnlock);
+    Assert.IsFalse (unblocker.CanUnblock);
   }
 
   [TestMethod]
   public void PassNullTaskScheduler__ThrowsArgumentNullException ()
   {
-    using AsyncLock asyncLock   = new ();
+    using AsyncBlocker blocker  = new ();
 
     AggregateException aggregateException = Assert.ThrowsException<AggregateException>
     (
-      () => asyncLock.AutoLock (CancellationToken.None, Timeout.InfiniteTimeSpan, null!).Wait ()
+      () => blocker.AutoBlock (CancellationToken.None, Timeout.InfiniteTimeSpan, null!).Wait ()
     );
 
     ReadOnlyCollection<Exception> innerExceptions = aggregateException.InnerExceptions;

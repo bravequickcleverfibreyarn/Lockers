@@ -3,6 +3,7 @@
 using Software9119.Lockers;
 
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,8 +28,10 @@ sealed public class AsyncLockTests_Lock
     cts.Cancel ();
 
     AggregateException aggregateException = Assert.ThrowsException<AggregateException> (() => test.Wait ());
-    Assert.AreEqual (1, aggregateException.InnerExceptions.Count);
-    Assert.AreEqual (typeof (TaskCanceledException), aggregateException.InnerExceptions [0]!.GetType ());
+    
+    ReadOnlyCollection<Exception> innerExceptions = aggregateException.InnerExceptions;
+    Assert.AreEqual (1, innerExceptions.Count);
+    Assert.AreEqual (typeof (TaskCanceledException), innerExceptions [0]!.GetType ());
   }
 
   [TestMethod]
@@ -95,7 +98,8 @@ sealed public class AsyncLockTests_Lock
       () => asyncLock.Lock (CancellationToken.None, Timeout.InfiniteTimeSpan, null!).Wait ()
     );
 
-    Assert.AreEqual (1, aggregateException.InnerExceptions.Count);
-    Assert.AreEqual (typeof (ArgumentNullException), aggregateException.InnerExceptions [0]!.GetType ());
+    ReadOnlyCollection<Exception> innerExceptions = aggregateException.InnerExceptions;
+    Assert.AreEqual (1, innerExceptions.Count);
+    Assert.AreEqual (typeof (ArgumentNullException), innerExceptions [0]!.GetType ());
   }
 }
