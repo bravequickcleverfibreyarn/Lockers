@@ -29,7 +29,7 @@ public class AsyncBlocker : IDisposable
     if (scheduler is null)
       throw new ArgumentNullException (nameof (scheduler));
 
-    if (await are.WaitOneAsync (ct, maxWaitTime, scheduler))
+    if (await are.WaitOneAsync (ct, maxWaitTime, scheduler).ConfigureAwait(false))
       return new Unblocker (are);
 
     return default;

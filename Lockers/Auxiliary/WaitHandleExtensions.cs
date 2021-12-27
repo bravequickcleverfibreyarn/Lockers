@@ -75,7 +75,7 @@ namespace Software9119.Lockers.Internal.Extensions
         async __ =>
         {
           if (ctr != default)
-            await ctr.DisposeAsync ();
+            await ctr.DisposeAsync ().ConfigureAwait (false);
 
           _ = rwh.Unregister (null);
         },

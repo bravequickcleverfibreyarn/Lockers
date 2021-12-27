@@ -1,4 +1,4 @@
-﻿using Software9119.Lockers.Internal.Extensions;
+using Software9119.Lockers.Internal.Extensions;
 
 using System;
 using System.Threading;
@@ -27,8 +27,10 @@ public class AsyncLock : IDisposable
   /// <exception cref="TaskCanceledException" />
   async public Task<Unlocker> AutoLock ( CancellationToken ct, TimeSpan maxWaitTime, TaskScheduler scheduler )
   {
+#pragma warning disable CA2007 // Consider calling ConfigureAwait on the awaited task
     if (await Lock (ct, maxWaitTime, scheduler))
       return new Unlocker (are);
+#pragma warning restore CA2007 // Consider calling ConfigureAwait on the awaited task
 
     return default;
   }
@@ -43,7 +45,7 @@ public class AsyncLock : IDisposable
     if (scheduler is null)
       throw new ArgumentNullException (nameof (scheduler));
 
-    if (await are.WaitOneAsync (ct, maxWaitTime, scheduler))
+    if (await are.WaitOneAsync (ct, maxWaitTime, scheduler).ConfigureAwait (false))
     {
       Thread.MemoryBarrier ();
       return true;
