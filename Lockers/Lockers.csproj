@@ -15,17 +15,18 @@
     <Description>Models for non-blocking synchronization.</Description>
     <Copyright>Verbal consent needed.</Copyright>
     <RootNamespace>Software9119.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-    <AssemblyVersion>2.0.0.0</AssemblyVersion>    
-    <Version>2.0.0</Version>
+    <AssemblyName>$(RootNamespace)</AssemblyName>
+    <AssemblyVersion>2.0.1.0</AssemblyVersion>    
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <PackageId>Software9119.$(AssemblyName).$(Configuration)</PackageId>
+    <PackageId>$(AssemblyName).$(Configuration)</PackageId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <PackageId>Software9119.$(AssemblyName)</PackageId>
+    <PackageId>$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
@@ -33,7 +34,7 @@
   </Target>
 
   <ItemGroup>
-    <PackageReference Include="Software9119.Aid" Version="9.2.0" />
+    <PackageReference Include="Software9119.Aid" Version="11.0.1" />
   </ItemGroup>
 
 </Project>
