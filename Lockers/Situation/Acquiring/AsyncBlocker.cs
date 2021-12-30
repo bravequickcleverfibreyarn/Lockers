@@ -1,4 +1,4 @@
-﻿using Software9119.Lockers.Extensions;
+﻿using Software9119.Aid.Concurrency.Unchecked;
 
 using System;
 using System.Threading;
@@ -29,13 +29,12 @@ public class AsyncBlocker : IDisposable
     if (scheduler is null)
       throw new ArgumentNullException (nameof (scheduler));
 
-    if (await are.WaitOneAsync (ct, maxWaitTime, scheduler).ConfigureAwait(false))
+    if (await are.WaitOneAsync (ct, maxWaitTime, scheduler).ConfigureAwait (false))
       return new Unblocker (are);
 
     return default;
   }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public void Dispose ()
   {
     if (disposed)
@@ -48,9 +47,6 @@ public class AsyncBlocker : IDisposable
     Dispose (true);
     GC.SuppressFinalize (this);
   }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   virtual protected void Dispose ( bool disposing ) { }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

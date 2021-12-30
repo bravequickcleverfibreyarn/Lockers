@@ -4,21 +4,17 @@ using System.Threading;
 
 namespace Software9119.Lockers;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 public struct Unblocker : IDisposable
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 {
 
   readonly EventWaitHandle ewh;
   bool disposed;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public Unblocker ( EventWaitHandle ewh )
   {
     this.ewh = ewh;
     disposed = false;
   }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
   /// <returns>
   /// Whether there is <see cref="EventWaitHandle"/>
@@ -30,7 +26,6 @@ public struct Unblocker : IDisposable
   [MemberNotNullWhen (true, nameof (ewh))]
   public bool CanUnblock => ewh is not null;
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public void Dispose ()
   {
     if (disposed)
@@ -40,9 +35,6 @@ public struct Unblocker : IDisposable
 
     disposed = true;
   }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public bool Unblock () => CanUnblock && ewh.Set ();
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

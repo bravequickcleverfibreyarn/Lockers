@@ -1,4 +1,4 @@
-using Software9119.Lockers.Internal.Extensions;
+using Software9119.Aid.Concurrency.Unchecked;
 
 using System;
 using System.Threading;
@@ -54,15 +54,12 @@ public class AsyncLock : IDisposable
     return false;
   }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public bool Unlock ()
   {
     Thread.MemoryBarrier ();
     return are.Set ();
   }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   public void Dispose ()
   {
     if (disposed)
@@ -75,9 +72,6 @@ public class AsyncLock : IDisposable
     Dispose (true);
     GC.SuppressFinalize (this);
   }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
   virtual protected void Dispose ( bool disposing ) { }
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

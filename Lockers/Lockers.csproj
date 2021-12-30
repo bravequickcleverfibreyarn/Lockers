@@ -30,10 +30,11 @@
   </PropertyGroup>
 
   <Target Name="CopyPackage" AfterTargets="Pack">
-    <Copy
-      SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg"
-      DestinationFolder=".\..\packages\"
-    />
+    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder=".\..\packages\" />
   </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Software9119.Aid" Version="9.2.0" />
+  </ItemGroup>
 
 </Project>
